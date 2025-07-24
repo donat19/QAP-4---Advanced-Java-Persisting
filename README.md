@@ -184,6 +184,12 @@ All requirements met! The application successfully demonstrates both file-based 
 
 ---
 
+## 📸 Screenshots
+
+![Application Demo](screenshots/image.png)
+
+---
+
 **Ready for submission! 🚀**
 
 sql
