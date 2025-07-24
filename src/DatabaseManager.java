@@ -6,10 +6,9 @@ import java.util.*;
  * Provides functionality to save and retrieve Patient objects from PostgreSQL database.
  */
 public class DatabaseManager {
-    // Database connection parameters - UPDATE THESE WITH YOUR DATABASE DETAILS
     private static final String URL = "jdbc:postgresql://localhost:5432/qap4_database";
     private static final String USER = "postgres";
-    private static final String PASSWORD = "your_password";
+    private static final String PASSWORD = "postgres";
 
     /**
      * Saves a Patient object to the database
@@ -25,7 +24,13 @@ public class DatabaseManager {
             stmt.setInt(1, patient.getPatientId());
             stmt.setString(2, patient.getFirstName());
             stmt.setString(3, patient.getLastName());
-            stmt.setString(4, patient.getDob());
+            
+            try {
+                java.sql.Date sqlDate = java.sql.Date.valueOf(patient.getDob());
+                stmt.setDate(4, sqlDate);
+            } catch (IllegalArgumentException e) {
+                throw new SQLException("Invalid date format. Expected YYYY-MM-DD, got: " + patient.getDob());
+            }
             
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected > 0) {
@@ -51,11 +56,14 @@ public class DatabaseManager {
              ResultSet rs = stmt.executeQuery(query)) {
             
             while (rs.next()) {
+                java.sql.Date sqlDate = rs.getDate("dob");
+                String dobString = sqlDate.toString();
+                
                 Patient patient = new Patient(
                     rs.getInt("id"),
                     rs.getString("first_name"),
                     rs.getString("last_name"),
-                    rs.getString("dob")
+                    dobString
                 );
                 patients.add(patient);
             }

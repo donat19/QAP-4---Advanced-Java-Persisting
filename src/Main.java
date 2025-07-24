@@ -70,10 +70,10 @@ public class Main {
     private static int getChoice() {
         try {
             int choice = scanner.nextInt();
-            scanner.nextLine(); // consume newline
+            scanner.nextLine();
             return choice;
         } catch (Exception e) {
-            scanner.nextLine(); // clear invalid input
+            scanner.nextLine();
             return -1;
         }
     }
@@ -87,14 +87,14 @@ public class Main {
         try {
             System.out.print("Enter Drug ID: ");
             int drugId = scanner.nextInt();
-            scanner.nextLine(); // consume newline
+            scanner.nextLine();
             
             System.out.print("Enter Drug Name: ");
             String drugName = scanner.nextLine();
             
             System.out.print("Enter Drug Cost: ");
             double drugCost = scanner.nextDouble();
-            scanner.nextLine(); // consume newline
+            scanner.nextLine();
             
             System.out.print("Enter Dosage: ");
             String dosage = scanner.nextLine();
@@ -104,7 +104,7 @@ public class Main {
             
         } catch (Exception e) {
             System.out.println("Error creating drug: " + e.getMessage());
-            scanner.nextLine(); // clear invalid input
+            scanner.nextLine();
         }
     }
 
@@ -144,7 +144,7 @@ public class Main {
         try {
             System.out.print("Enter Patient ID: ");
             int patientId = scanner.nextInt();
-            scanner.nextLine(); // consume newline
+            scanner.nextLine();
             
             System.out.print("Enter First Name: ");
             String firstName = scanner.nextLine();
@@ -157,13 +157,12 @@ public class Main {
             
             Patient patient = new Patient(patientId, firstName, lastName, dob);
             
-            // Create table if it doesn't exist
             DatabaseManager.createTableIfNotExists();
             DatabaseManager.savePatient(patient);
             
         } catch (Exception e) {
             System.out.println("Error saving patient: " + e.getMessage());
-            scanner.nextLine(); // clear invalid input
+            scanner.nextLine();
         }
     }
 
